@@ -1,0 +1,8 @@
+---
+title: "P8105 Homework 1"
+author: "Christine Lucille Kuryla"
+date: "2023-09-17"
+output: github_document
+---
+
+This is the Rmd document for homework 1!
