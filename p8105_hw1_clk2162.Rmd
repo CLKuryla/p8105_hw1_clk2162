@@ -5,4 +5,55 @@ date: "2023-09-17"
 output: github_document
 ---
 
-This is the Rmd document for homework 1!
+The following document is the first homework for P8105.
+
+# Problem 1
+
+First, load `early_january_weather` from the `penguins` dataset in the library `moderndive` as well as the tidyverse.
+```{r problem1_load_and_explore, message = FALSE}
+
+# Load moderndive library 
+library(moderndive)
+
+# Load tidyverse for dplyr to enable pull when calculating the mean temperature
+library(tidyverse)
+
+# This laods the early_january_weather dataset into a variable called early_january_weather
+data("early_january_weather")
+
+```
+
+* The variables in this data set were: `r colnames(early_january_weather)`.
+  * Some important variables included:
+    * `origin`, which was `r pull(early_january_weather,origin)[1]` for every measurement.
+    * Year (`year`) and month (`month`), which were the same for every observation: `r pull(early_january_weather,year)[1]` and `r pull(early_january_weather,month)[1]`, respectively.
+    * Several weather measurements were included, such as
+      * Temperature (`temp`), which ranged from `r min(pull(early_january_weather, temp))` to `r max(pull(early_january_weather, temp))`.
+      * Dew point (`dewp`), which ranged from `r min(pull(early_january_weather, dewp))` to `r max(pull(early_january_weather, dewp))`.
+      * Humidity (`humid`), which ranged from `r min(pull(early_january_weather, humid))` to `r max(pull(early_january_weather, humid))`.
+      * Details about the wind, such as the direction (`wind_dir`), speed (`wind_speed`), and gusts (`wind_gust`).
+      * Precipitation (`precip`), which ranged from `r min(pull(early_january_weather, precip))` to `r max(pull(early_january_weather, precip))`.
+      * Pressure (`pressure`), which which had some missing values but ranged from `r min(na.omit(pull(early_january_weather, pressure)))` to `r max(na.omit(pull(early_january_weather, pressure)))`.
+      * Visibility (`visib`), which had some missing values but ranged from `r min(na.omit(pull(early_january_weather, visib)))` to `r max(na.omit(pull(early_january_weather, visib)))`.
+* The data set contained `r nrow(early_january_weather)` observations (rows) with `r ncol(early_january_weather)` variables (columns) describing each observation.
+* The mean temperature was `r mean(pull(early_january_weather, temp))`.
+
+```{r problem1_plot}
+
+# Create a scatterplot of temp (y) vs time_hour (x) colored using the humid variable
+
+ggplot(early_january_weather, aes(x = time_hour, y = temp, color = humid)) +
+  geom_point()
+
+# Save the plot
+
+ggsave("scatter_plot.pdf")
+
+```
+
+In the plot of the temperature vs the date/time, we can see that:
+
+* The data measurements exist from `r min(pull(early_january_weather, time_hour))` to `r max(pull(early_january_weather, time_hour))` and the temperature ranges from `r min(pull(early_january_weather, temp))` to `r max(pull(early_january_weather, temp))`. 
+* There is an overall upwards trend in the data, so it seems that as time passes from early to mid January, the temperature warms overall. 
+* It is also apparent that the temperature fluctuates throughout the time measurements, which probably represents the fluctuation of temperature during the day and night cycles. 
+* The color of the points seems to go from a dark blue to a lighter blue as time passes, which means that the humidity increases as the measurements go from early to mid January. 
